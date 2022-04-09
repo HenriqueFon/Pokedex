@@ -9,7 +9,7 @@ const fetchPokemon=()=>{
     const pokemonPromises=[];//vetor para armazenar ids de pokemons
     
     
-    for(let pokemonID=1;pokemonID<=150;pokemonID++){
+    for(let pokemonID=150;pokemonID<=300;pokemonID++){
         pokemonPromises.push(fetch(getPokemonUrl(pokemonID))
             .then(response=>response.json()))//retorno do pokemon e da push para ser salvo no array
             
@@ -23,7 +23,7 @@ const fetchPokemon=()=>{
                 const types= pokemon.types.map(typeInfo=>typeInfo.type.name)
                 accumulator+=
                             '<li class="card">'+
-                            '<img class="card-image"' + types[0] + ' alt='+pokemon.name+' src='+pokemon.sprites["front_default"]+'/>'
+                            '<img class="card-image"' + types[0] + ' alt=' + pokemon.name +' src=' +pokemon.sprites['front_default']+ '>'
                                 '<h2 class="card-tittle">' + pokemon.id + pokemon.name + '</h2>' +
                                 '<p class="card-subtitle">' + types.join(' | ') + '</p>'
                             +'</li>'
@@ -31,7 +31,7 @@ const fetchPokemon=()=>{
             },'')
 
             const ul=document.querySelector('[data-js="pokedex"]')
-            console.log(ul);
+            ul.innerHTML=listPokemons;
         })
 
     /*const getPokemonUrl='https://pokeapi.co/api/v2/pokemon/150';
