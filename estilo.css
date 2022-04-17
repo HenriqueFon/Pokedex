@@ -1,0 +1,77 @@
+body{
+    font-family: "Flexo Light";
+    text-transform: uppercase;
+    
+}
+
+title{
+    text-transform: uppercase;
+    font-size: 20px;
+}
+
+h6{
+    color:white;
+    margin-top:0;
+}
+
+
+.card-section{
+    border-radius:30px;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    width:250px;
+    height:180px;
+}
+
+.card-upper{
+    background-color: rgb(116, 240, 116);
+    border-radius:30px 30px 200px 200px;
+}
+
+.card-number,.card-name{
+    display:inline;
+}
+
+.card-title{
+    padding-top:10px;
+}
+
+.card-number{
+    margin-left:-25px;
+}
+
+.card-name{
+    padding-left:25px;
+}
+
+.imgPokemon{
+    margin-top:10px;
+    margin-left:70px;
+}
+
+.card-bottom{
+    height:auto;
+}
+.card-info-top{
+    padding-top: 10px;
+}
+
+.card-type,.card-type-2{
+    display:inline-block;
+    border-radius:20px;
+    text-align:center;
+    width:65px;
+    height:14px;
+}
+
+.card-type{
+    background-color: rgb(27, 223, 27);
+}
+
+.card-type-2{
+    background-color:rgb(252, 25, 252);
+    margin-left:20px;
+}
+
+.type-data{
+    margin-top:20px;
+}

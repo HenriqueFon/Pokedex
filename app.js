@@ -5,7 +5,7 @@ const fetchPokemon=()=>{
     //then traz uma resposta do json caso funcione
     //response tbm é uma promise, logo usamos outra promise
 
-    const getPokemonUrl = id =>'https://pokeapi.co/api/v2/pokemon/'+id;
+    /*const getPokemonUrl = id =>'https://pokeapi.co/api/v2/pokemon/'+id;
     const pokemonPromises=[];//vetor para armazenar ids de pokemons
     
     
@@ -33,15 +33,40 @@ const fetchPokemon=()=>{
             const ul=document.querySelector('[data-js="pokedex"]')
             ul.innerHTML=listPokemons;
         })
+*/
 
-    /*const getPokemonUrl='https://pokeapi.co/api/v2/pokemon/150';
+    const getPokemonUrl='https://pokeapi.co/api/v2/pokemon/1';
 
     fetch(getPokemonUrl)
         .then(response=>response.json())
         .then(pokemons=>{
-            console.log(pokemons)
-            console.log(getPokemonUrl)
-        })*/
-}
 
+            const ul=document.querySelector('[data-js="pokedex"]')
+            ul.innerHTML=
+                '<div class="card-section">'+
+                    '<div class="card-upper">'+
+                        '<div class="card-title">'+
+                            '<ul>'+
+                                '<li class="card-number"> Nº '+ pokemons.id +'</li>' +
+                                ' <li class="card-name">'+ pokemons.name +'</li>'+
+                            '</ul>'+
+                        '</div>'+
+                        '<div><img src='+ pokemons.sprites['front_default'] +' class="imgPokemon"></div>'+
+                    '</div>'+
+                    '<div class="card-bottom">'+
+                        '<div class="card-info-top">'+
+                            '<ul>'+
+                                '<li class="card-type"><h6>'+ pokemons.types[0].type.name +'</h6></li>'+
+                                '<li class="card-type-2"><h6>'+ pokemons.types[1].type.name +'</h6></li>'+
+                            '</ul>'+
+                        '</div>'+
+                        '<div class="type-data">'+
+                            '<ul>'+
+                                
+                            '</ul>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+    })
+}
 fetchPokemon();
