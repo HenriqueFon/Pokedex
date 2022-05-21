@@ -14,6 +14,12 @@ h6{
     margin-top:0;
 }
 
+.pokedex {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	grid-gap: 40px;
+	padding-inline-start: 0;
+}
 
 .card-section{
     border-radius:30px;
@@ -55,18 +61,33 @@ h6{
     padding-top: 10px;
 }
 
-.card-type,.card-type-2{
+/*.card-type,.card-type-2{
     display:inline-block;
     border-radius:20px;
     text-align:center;
     width:65px;
     height:14px;
-}
+}*/
 
+/*.card-type,.card-type-2{
+    display:inline-block;
+    border-radius:20px;
+    text-align:center;
+    width:65px;
+    height:14px;
+}*/
 .card-type{
-    background-color: rgb(27, 223, 27);
+    display:flex;
+    justify-content: space-around;
+    border-radius:20px;
+    text-align:center;
 }
-
+.card-type span{
+    width:65px;
+    height:16px;
+    color:white;
+    border-radius:20px;
+}
 .card-type-2{
     background-color:rgb(252, 25, 252);
     margin-left:20px;
