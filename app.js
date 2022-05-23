@@ -1,72 +1,80 @@
-const fetchPokemon=()=>{
-    //função que recebe um id e concatena na url
-    //fetch é uma promise que retorna true caso funcione
-    //e false caso falhe
-    //then traz uma resposta do json caso funcione
-    //response tbm é uma promise, logo usamos outra promise
+const typeColor = {
+    bug: "#26de81",
+    dragon: "#ffeaa7",
+    electric: "#fed330",
+    fairy: "#FF0069",
+    fighting: "#30336b",
+    fire: "#f0932b",
+    flying: "#81ecec",
+    grass: "#00b894",
+    ground: "#EFB549",
+    ghost: "#a55eea",
+    ice: "#74b9ff",
+    normal: "#95afc0",
+    poison: "#6c5ce7",
+    psychic: "#a29bfe",
+    rock: "#2d3436",
+    water: "#0190FF",
+  };
 
-    /*const getPokemonUrl = id =>'https://pokeapi.co/api/v2/pokemon/'+id;
-    const pokemonPromises=[];//vetor para armazenar ids de pokemons
-    
-    
-    for(let pokemonID=1;pokemonID<=150;pokemonID++){
-        pokemonPromises.push(fetch(getPokemonUrl(pokemonID))
-            .then(response=>response.json()))//retorno do pokemon e da push para ser salvo no array
-            
+
+const fetchPokemon = () =>{
+    const getPokemonUrl = id =>'https://pokeapi.co/api/v2/pokemon/'+id;
+    const pokemonArray=[];
+
+    for(let pokemonId=1;pokemonId<=150;pokemonId++){
+        pokemonArray.push(fetch(getPokemonUrl(pokemonId))
+        .then(response=>response.json())) 
     }
     
-    Promise.all(pokemonPromises)//quando a pokemonPromises for concluída, then-então exiba os pokemons
-        .then(pokemons=>{
-            //console.log(pokemons)
-            //accumulator seria o resultado
-            const listPokemons=pokemons.reduce((accumulator,pokemon)=>{//para cada tipo de pokemon dentro do retorno de pokemon
-                const types= pokemon.types.map(typeInfo=>typeInfo.type.name)
-                accumulator+=
-                            '<li class="card">'+
-                            '<img class="card-image" ' + types[0] + ' alt=' + pokemon.name + ' src=' +pokemon.sprites['front_default'] + '>'+
-                                '<h2 class="card-tittle">' + pokemon.name + '</h2>' +
-                                '<p class="card-subtitle">' + types.join(' | ') + '</p>'
-                            +'</li>'
-                return accumulator;    
-            },'')
-
-            const ul=document.querySelector('[data-js="pokedex"]')
-            ul.innerHTML=listPokemons;
-        })
-*/
-
-    const getPokemonUrl='https://pokeapi.co/api/v2/pokemon/1';
-
-    fetch(getPokemonUrl)
-        .then(response=>response.json())
-        .then(pokemons=>{
-
-            const ul=document.querySelector('[data-js="pokedex"]')
-            ul.innerHTML=
-                '<div class="card-section">'+
-                    '<div class="card-upper">'+
-                        '<div class="card-title">'+
-                            '<ul>'+
-                                '<li class="card-number"> Nº '+ pokemons.id +'</li>' +
-                                ' <li class="card-name">'+ pokemons.name +'</li>'+
-                            '</ul>'+
-                        '</div>'+
-                        '<div><img src='+ pokemons.sprites['front_default'] +' class="imgPokemon"></div>'+
-                    '</div>'+
-                    '<div class="card-bottom">'+
-                        '<div class="card-info-top">'+
-                            '<ul>'+
-                                '<li class="card-type"><h6>'+ pokemons.types[0].type.name +'</h6></li>'+
-                                '<li class="card-type-2"><h6>'+ pokemons.types[1].type.name +'</h6></li>'+
-                            '</ul>'+
-                        '</div>'+
-                        '<div class="type-data">'+
-                            '<ul>'+
-                                
-                            '</ul>'+
-                        '</div>'+
-                    '</div>'+
-                '</div>'
-    })
+    Promise.all(pokemonArray)
+    .then(pokemons => {
+        const listPokemons=pokemons.reduce((printar,pokemon)=>{
+            const id=pokemon.id;
+            const name=pokemon.name;
+            const sprite=pokemon.sprites['front_default'];
+            
+            printar+=
+                `<div class="card-section">
+                    <div class="card-upper" style="background:${getColorByType(pokemon.types[0].type.name)}">
+                        <div class="card-title">
+                            <ul>
+                                <li class="card-number"> Nº ${id}</li>
+                                 <li class="card-name">${name}</li>
+                            </ul>
+                        </div>
+                        <div><img src='${sprite}' class="imgPokemon"/></div>
+                    </div>
+                    <div class="card-bottom">
+                        <div class="card-type" id="card-type" type-color>
+                            ${appendTypes(pokemon.types)}
+                        </div>
+                    </div>
+                </div>`
+            return printar;
+        },'')
+        const ul=document.querySelector('[data-js="pokedex"]');
+        ul.innerHTML=listPokemons;
+    },'')
 }
+
+const appendTypes = (types) =>{
+   const spans = types.map((item) => {
+       const span=document.createElement("SPAN");
+       span.textContent=item.type.name;
+       span.innerHTML=item.type.name;
+       span.style.backgroundColor=getColorByType(item.type.name); 
+       
+       return span;
+    });
+    const htmlSpans = spans.map(item => item.outerHTML).join('');
+  
+    return htmlSpans;
+};
+
+
+const getColorByType = type => {
+   return color = typeColor[type]
+}
+
 fetchPokemon();
