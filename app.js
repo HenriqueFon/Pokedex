@@ -58,6 +58,61 @@ const fetchPokemon = () =>{
     },'')
 }
 
+const searchPokemon = () =>{
+
+    const namePokemon=document.getElementById('pokemonSearch').value;
+    
+
+    const getPokemonUrl = (namePokemon) =>`https://pokeapi.co/api/v2/pokemon/${namePokemon}`;
+    
+    fetch(getPokemonUrl(namePokemon))
+    .then(res=>res.json())
+    .then(pokemon=>{
+        const id=pokemon.id;
+        const name=pokemon.name;
+        const sprite=pokemon.sprites['front_default']
+        const  pokemonSearch=`<div class="card-section">
+                <div class="card-upper" style="background:${getColorByType(pokemon.types[0].type.name)}">
+                    <div class="card-title">
+                        <ul>
+                            <li class="card-number"> Nº ${id}</li>
+                            <li class="card-name">${name}</li>
+                        </ul>
+                    </div>
+                    <div><img src='${sprite}' class="imgPokemon"/></div>
+                </div>
+                <div class="card-bottom">
+                    <div class="card-type" id="card-type" type-color>
+                        ${appendTypes(pokemon.types)}
+                    </div>
+                </div>
+            </div>`
+        const ul=document.querySelector('[data-js="pokedex"]');
+        ul.innerHTML=pokemonSearch;    
+    })
+    
+}
+
+let appendTypesSearch = (types) =>{
+    types.forEach((item) => {
+        let span=document.createElement("SPAN");
+        span.textContent=item.type.name;
+        span.innerHTML=item.type.name;
+        console.log(span);
+        document.querySelector("card-type").appendChild(span)
+    })
+};
+let styleCardSearch = (color) => {
+    let backgroundCardColor=document.querySelector('[change-color]');
+    backgroundCardColor.className='card-upper';
+    backgroundCardColor.style.backgroundColor=color;
+    let cardTypeColor=document.querySelectorAll('[type-color] span');
+    cardTypeColor.className='card-type';
+    cardTypeColor[0].style.backgroundColor=color;
+    cardTypeColor[1].style.backgroundColor=color2;
+};
+
+
 const appendTypes = (types) =>{
    const spans = types.map((item) => {
        const span=document.createElement("SPAN");
