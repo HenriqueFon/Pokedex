@@ -15,14 +15,21 @@ const typeColor = {
     psychic: "#a29bfe",
     rock: "#2d3436",
     water: "#0190FF",
+    steel: "#BFD2E6",
+    dark:"#000000"
   };
+
+
+
+//const pokeCard=document.querySelector('.card-section');
+//pokeCard.addEventListener('click',(e)=> iniciaModal('modal'));
 
 
 const fetchPokemon = () =>{
     const getPokemonUrl = id =>'https://pokeapi.co/api/v2/pokemon/'+id;
     const pokemonArray=[];
 
-    for(let pokemonId=1;pokemonId<=150;pokemonId++){
+    for(let pokemonId=1;pokemonId<=151;pokemonId++){
         pokemonArray.push(fetch(getPokemonUrl(pokemonId))
         .then(response=>response.json())) 
     }
@@ -33,7 +40,7 @@ const fetchPokemon = () =>{
             const id=pokemon.id;
             const name=pokemon.name;
             const sprite=pokemon.sprites['front_default'];
-            
+
             printar+=
                 `<div class="card-section">
                     <div class="card-upper" style="background:${getColorByType(pokemon.types[0].type.name)}">
@@ -49,8 +56,10 @@ const fetchPokemon = () =>{
                         <div class="card-type" id="card-type" type-color>
                             ${appendTypes(pokemon.types)}
                         </div>
+                        <button class="modal-button" style="background:${getColorByType(pokemon.types[0].type.name)}" onclick="pokemonModal(${id})">more</button>
                     </div>
-                </div>`
+                </div>
+                `
             return printar;
         },'')
         const ul=document.querySelector('[data-js="pokedex"]');
@@ -58,14 +67,15 @@ const fetchPokemon = () =>{
     },'')
 }
 
+
+
 const searchPokemon = () =>{
 
     const namePokemon=document.getElementById('pokemonSearch').value;
-    
-
+    const namePokemonLower=namePokemon.toLowerCase();
     const getPokemonUrl = (namePokemon) =>`https://pokeapi.co/api/v2/pokemon/${namePokemon}`;
     
-    fetch(getPokemonUrl(namePokemon))
+    fetch(getPokemonUrl(namePokemonLower))
     .then(res=>res.json())
     .then(pokemon=>{
         const id=pokemon.id;
@@ -130,6 +140,43 @@ const appendTypes = (types) =>{
 
 const getColorByType = type => {
    return color = typeColor[type]
+}
+
+function pokemonModal(name){
+    const getPokemonUrl = (name) =>`https://pokeapi.co/api/v2/pokemon/${name}`;
+    
+    fetch(getPokemonUrl(name))
+    .then(res=>res.json())
+    .then(pokemon=>{
+        console.log(pokemon)
+        const id=pokemon.id;
+        const name=pokemon.name;
+        const sprite=pokemon.sprites['front_default'];
+        const  pokemonSearch=`
+            <div id="modal-card" class="modal-container">
+                <div class="card-section-modal">
+                    <button class="botao_fechar" onclick="fetchPokemon()">Fechar</button>
+                    <div id="modal">
+                        <div class="card-upper-modal" style="background:${getColorByType(pokemon.types[0].type.name)}">
+                        <div class="card-title-modal">
+                            <ul>
+                                <li class="card-number-modal"> Nº ${id}</li>
+                                <li class="card-name-modal">${name}</li>
+                            </ul>
+                        </div>
+                        <div><img src='${sprite}' class="imgPokemon-modal"/></div>
+                        </div>
+                        <div class="card-bottom">
+                            <div class="card-type" id="card-type" type-color>
+                                ${appendTypes(pokemon.types)}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>`
+        const ul=document.querySelector('[data-js="pokedex"]');
+        ul.innerHTML=pokemonSearch;    
+    })
 }
 
 fetchPokemon();
